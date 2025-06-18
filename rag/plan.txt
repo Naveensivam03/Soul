@@ -1,0 +1,19 @@
+ we need to convert the user input into vector embeddings anf then store it in the vector database .
+
+ use that as the rag file to learn for the ai.
+
+
+ based on all the conversations the ai will generate an daily text summarization and provide that to the user whenever teh user feels and also the data fo the user is categorized based on emotions and sentiments and date.
+
+
+ 
+
+ tommorrows task:
+
+ -[] convert teh user speech and categories it based on the user emotions and sentiments.
+ -[] convert those into embeddings and then we can able to store that in a vector database.
+ -[] and also generate a summary based on the user speech until that day.
+
+
+
+

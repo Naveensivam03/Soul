@@ -1,0 +1,21 @@
+
+venv10/
+venv/
+./vosk-model-small-en-us-0.15
+
+# Ignore virtual environments
+venv/
+venv10/
+.venv/
+.env/
+env/
+
+# Ignore vosk model folder
+vosk-model-small-en-us-0.15/
+
+# (Optional) Ignore PyCharm, VSCode, and system files
+.idea/
+.vscode/
+__pycache__/
+*.pyc
+.DS_Store
