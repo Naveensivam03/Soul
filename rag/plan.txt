@@ -16,4 +16,20 @@
 
 
 
+--pipeline--
+1: user input from the whisper is passed into two models to find out the sentiment and embeddings to convert that and stored that into the database.
+
+MODELS:
+
+    EMBEDDINGS:
+        - thenlper/gte-small
+    SENTIMENT :
+        - j-hartmann/emotion-english-distilroberta-base
+
+2: once the user text is converted into the embeddings store that into the chromadb.
+3: instead of storing it into the db chunks wise lets assume each speech as single chunks and implement that.
+
+
+
+
 
