@@ -2,9 +2,9 @@ from langchain.vectorstores import Chroma
 from langchain.embeddings import HuggingFaceEmbeddings
 from typing import List
 import uuid
-from datetime import datetime
+from datetime import datetime , timezone
 from embeddings import get_embedding
-
+from gemini_ai import summary_para
 #path to the old database i mean chroma
 PATH = './chroma'
 
@@ -12,10 +12,12 @@ PATH = './chroma'
 PATH_SUMM = './chroma_sum'
 
 
-#current date 
-curr_date = datetime.now()
 
 def get_datas():
+
+    #current date 
+    curr_date = datetime.now()
+
     #load the db
     db = Chroma(persist_directory = PATH , embedding_function = get_embedding())
 
@@ -37,3 +39,33 @@ def get_datas():
 
 
 #load that into the ai model for summary and load that result back by converting that into the embeddings into a new path.
+
+
+def Store_summary():
+    uid = uuid.uuid4()
+    with open("uid.txt","r") as f:
+        ids = f.readlines()
+        f.close()
+    while str(uid) in ids:
+        uid = uuid.uuid4()
+    
+    #input_text 
+    input_text = summary_para()
+    #metadata to added to the input text
+    
+    metadata = {
+        "chunk_id ":str(uid)  ,   #uid for unique to determine the chunk
+        "timestamp" : datetime.now(timezone.utc).isoformat()
+    }
+
+    #wrap everything in teh document to load it into chroma
+    docs = Document(page_content = input_text , metadata = metadata)
+
+    #load the content and change it into embeddings and store it in the database
+
+    db = Chroma(persist_directory = PATH_SUMM , embedding_function = get_embedding())
+    db.add_document([docs])
+    db.persist()
+    print(f"✅ summary stored chunk (ID: {metadata['chunk_id']}) with timestamp : {metadata['timestamp']}.")
+
+
