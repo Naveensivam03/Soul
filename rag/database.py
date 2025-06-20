@@ -40,3 +40,4 @@ def store_into_database(input_text):
     print(f"✅ Stored chunk (ID: {metadata['chunk_id']}) with timestamp : {metadata['timestamp']}.")
 
 
+
