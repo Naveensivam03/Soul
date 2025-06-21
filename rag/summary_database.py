@@ -5,6 +5,7 @@ import uuid
 from datetime import datetime , timezone
 from embeddings import get_embedding
 from gemini_ai import summary_para
+import document
 #path to the old database i mean chroma
 PATH = './chroma'
 
@@ -28,7 +29,7 @@ def get_datas():
     documents = all_docs["documents"]
 
     #filter by date
-    iltered_chunks = [
+    filtered_chunks = [
         doc for doc, meta in zip(documents, metadatas)
         if meta and "timestamp" in meta and meta["timestamp"].startswith(curr_date)
     ]
@@ -59,7 +60,7 @@ def Store_summary():
     }
 
     #wrap everything in teh document to load it into chroma
-    docs = Document(page_content = input_text , metadata = metadata)
+    docs = document(page_content = input_text , metadata = metadata)
 
     #load the content and change it into embeddings and store it in the database
 
