@@ -5,7 +5,7 @@ from typing import List
 import uuid
 from datetime import datetime , timezone
 from embeddings import get_embedding
-
+import document
 
 #path to your chroma
 PATH = "./chroma"
@@ -30,7 +30,7 @@ def store_into_database(input_text):
     }
 
     #wrap everything in teh document to load it into chroma
-    docs = Document(page_content = input_text , metadata = metadata)
+    docs = document(page_content = input_text , metadata = metadata)
 
     #load the content and change it into embeddings and store it in the database
 
@@ -41,3 +41,4 @@ def store_into_database(input_text):
 
 
 
+#
