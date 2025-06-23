@@ -4,7 +4,7 @@ from typing import List
 import uuid
 from datetime import datetime , timezone
 from embeddings import get_embedding
-from summary_ai import summary_para
+# from summary_ai import summary_para
 from langchain_core.documents import Document
 from get_datas import get_datas
 #path to the old database i mean chroma
