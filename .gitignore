@@ -19,3 +19,11 @@ vosk-model-small-en-us-0.15/
 __pycache__/
 *.pyc
 .DS_Store
+
+rag/summary_ai.py
+rag/summary_database.py
+
+a.py
+audio.py
+b.py
+

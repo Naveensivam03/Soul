@@ -1,6 +1,7 @@
 #import the necesary requirements
-from langchain.vectorstores import Chroma
-from langchain.embeddings import HuggingFaceEmbeddings
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
+
 from typing import List
 import uuid
 from datetime import datetime , timezone
@@ -19,11 +20,11 @@ PATH = "./chroma"
 def store_into_database(input_text):
     #store the unique id within the text file for current multiple time running:
     uid = uuid.uuid4()
-    with open("uid.txt","r") as f:
-        ids = f.readlines()
-        f.close()
-    while str(uid) in ids:
-        uid = uuid.uuid4()
+    # with open("uid.txt","r") as f:
+    #     ids = f.readlines()
+    #     f.close()
+    # while str(uid) in ids:
+    uid = uuid.uuid4()
     
     #metadata to added to the input text
     

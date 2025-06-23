@@ -2,7 +2,8 @@ import os
 import google.generativeai as genai
 from dotenv import load_dotenv
 from embeddings import get_embedding
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 # Load API key from .env
 load_dotenv()
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
