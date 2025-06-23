@@ -10,7 +10,6 @@ venv10/
 .env/
 env/
 
-/home/elliot/startups/soul/.env
 # Ignore vosk model folder
 vosk-model-small-en-us-0.15/
 
@@ -20,3 +19,11 @@ vosk-model-small-en-us-0.15/
 __pycache__/
 *.pyc
 .DS_Store
+
+rag/summary_ai.py
+rag/summary_database.py
+
+a.py
+audio.py
+b.py
+
