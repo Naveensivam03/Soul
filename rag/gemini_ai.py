@@ -43,22 +43,22 @@ def query_anima_rag(user_input: str ):
      relevant_chunks = "\n\n".join([doc.page_content for doc, _ in results]) if results else "No memories found."
     #  related_ids = [doc.metadata.get("chunk_id") for doc, _ in results]
 
-    Store_summary()
+    #Store_summary()
     # Step 2: Retrieve from summary store using chunk_id match
-    db_summ = Chroma(persist_directory=PATH_SUMM, embedding_function=embedding_fn)
-    all_summaries = db_summ.get()
-    summaries = []
-    if all_summaries:
-        for chunk_id in range(100):
-            for i, meta in enumerate(all_summaries["metadatas"]):
-                if meta.get("chunk_id") == chunk_id:
-                    summaries.append(all_summaries["documents"][i])
-                    break
+    # db_summ = Chroma(persist_directory=PATH_SUMM, embedding_function=embedding_fn)
+    # all_summaries = db_summ.get()
+    # summaries = []
+    # if all_summaries:
+    #     for chunk_id in range(100):
+    #         for i, meta in enumerate(all_summaries["metadatas"]):
+    #             if meta.get("chunk_id") == chunk_id:
+    #                 summaries.append(all_summaries["documents"][i])
+    #                 break
 
-        summary_data = "\n".join(summaries) if summaries else "No summary related to these memories."
+    #     summary_data = "\n".join(summaries) if summaries else "No summary related to these memories."
 
-    else:
-        summary_data = "None"
+    # else:
+    #     summary_data = "None"
     # Step 3: Build the Anima prompt
     prompt = f"""
 You are Anima — the soul companion, a Gen-Z empath who listens like a best friend and thinks like a mindful AI.
@@ -71,8 +71,7 @@ You are Anima — the soul companion, a Gen-Z empath who listens like a best fri
 🔍 MATCHED MEMORIES:
 {relevant_chunks}
 
-📌 SUMMARY OF THOSE MEMORIES:
-{summary_data}
+
 
 🫂 YOUR RESPONSE:
 Talk like you're texting a close friend. Be emotionally intelligent. Mention the query, acknowledge their past patterns if visible, and respond with sincerity — no fake positivity, no therapist clichés. Help them feel seen.
