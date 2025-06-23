@@ -10,6 +10,7 @@ venv10/
 .env/
 env/
 
+/home/elliot/startups/soul/.env
 # Ignore vosk model folder
 vosk-model-small-en-us-0.15/
 
