@@ -9,7 +9,7 @@ venv10/
 .venv/
 .env/
 env/
-
+.env
 # Ignore vosk model folder
 vosk-model-small-en-us-0.15/
 
