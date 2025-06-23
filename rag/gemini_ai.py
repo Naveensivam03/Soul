@@ -3,7 +3,8 @@ import google.generativeai as genai
 from dotenv import load_dotenv
 from summary_database import Store_summary
 from embeddings import get_embedding
-from langchain.vectorstores import Chroma
+from langchain_community.vectorstores import Chroma
+from langchain_community.embeddings import HuggingFaceEmbeddings
 from get_datas import get_datas 
 
 
@@ -39,8 +40,13 @@ def query_anima_rag(user_input: str ):
     results = db_core.similarity_search_with_score(user_input, k=3)
     if not results:
         results = None
+        relevant_chunks = "nothing found!"
     else:
      relevant_chunks = "\n\n".join([doc.page_content for doc, _ in results]) if results else "No memories found."
+    print("-----------------------------------------------------------------------------------")
+
+    print(relevant_chunks)
+    print("-----------------------------------------------------------------------------------")
     #  related_ids = [doc.metadata.get("chunk_id") for doc, _ in results]
 
     #Store_summary()
