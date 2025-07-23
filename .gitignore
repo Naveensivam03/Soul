@@ -27,3 +27,5 @@ a.py
 audio.py
 b.py
 
+.env
+rag/.env
