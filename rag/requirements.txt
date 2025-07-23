@@ -5,8 +5,10 @@ scikit-learn
 numpy
 pandas
 chromadb
-langchain-schema
-langchain-vectorstores
-langchain-embeddings
+langchain-community
+langchain-core
+langchain
 valkey
-json
+python-dotenv
+huggingface-hub
+rich

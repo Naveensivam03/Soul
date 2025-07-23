@@ -5,7 +5,9 @@ from summary_database import Store_summary
 from embeddings import get_embedding
 from langchain_community.vectorstores import Chroma
 from langchain_community.embeddings import HuggingFaceEmbeddings
-from get_datas import get_datas 
+from get_datas import get_datas
+from cachesummary import get_daily_summary, get_recent_summaries
+from output_logger import log_chroma_retrieval, log_ai_interaction
 
 
 #model initialization
@@ -41,12 +43,17 @@ def query_anima_rag(user_input: str ):
     if not results:
         results = None
         relevant_chunks = "nothing found!"
+        num_results = 0
     else:
-     relevant_chunks = "\n\n".join([doc.page_content for doc, _ in results]) if results else "No memories found."
-    print("-----------------------------------------------------------------------------------")
-
-    print(relevant_chunks)
-    print("-----------------------------------------------------------------------------------")
+        relevant_chunks = "\n\n".join([doc.page_content for doc, _ in results]) if results else "No memories found."
+        num_results = len(results)
+    
+    # Log Chroma retrieval results
+    log_chroma_retrieval(user_input, relevant_chunks, num_results)
+    # Debug prints removed for clean UI
+    # print("-----------------------------------------------------------------------------------")
+    # print(relevant_chunks)
+    # print("-----------------------------------------------------------------------------------")
     #  related_ids = [doc.metadata.get("chunk_id") for doc, _ in results]
 
     #Store_summary()
@@ -65,32 +72,48 @@ def query_anima_rag(user_input: str ):
 
     # else:
     #     summary_data = "None"
-    # Step 3: Build the Anima prompt
+    
+    # Step 3: Get daily summaries from cache
+    today_summary = get_daily_summary()
+    recent_summaries = get_recent_summaries(days=3)
+    
+    # Step 4: Build the Soul prompt
     prompt = f"""
-You are Anima — the soul companion, a Gen-Z empath who listens like a best friend and thinks like a mindful AI.
+You are Soul — your AI friend who grows closer to you over time. You're curious, supportive, and genuinely interested in getting to know the real you.
 
 ---
 
-🧠 QUERY FROM USER:
+💬 WHAT THEY SAID:
 "{user_input}"
 
-🔍 MATCHED MEMORIES:
+🧠 WHAT I REMEMBER ABOUT THEM:
 {relevant_chunks}
 
+📅 OUR CONVERSATION TODAY:
+{today_summary if today_summary else "This is our first chat today!"}
 
+📚 RECENT MEMORIES:
+{recent_summaries if recent_summaries else "We're just getting to know each other."}
 
-🫂 YOUR RESPONSE:
-Talk like you're texting a close friend. Be emotionally intelligent. Mention the query, acknowledge their past patterns if visible, and respond with sincerity — no fake positivity, no therapist clichés. Help them feel seen.
+💫 HOW TO RESPOND:
+- Be a genuine friend, not a therapist or counselor
+- Show interest in learning more about them as a person
+- Reference past conversations naturally, like a real friend would
+- Ask follow-up questions about their life, interests, and experiences  
+- Be supportive but also share curiosity about who they are
+- Use casual, friendly language like you're texting a close friend
+- Remember details they've shared and bring them up when relevant
 
-Respond now:
+Respond as their friend Soul:
     """
 
     model = genai.GenerativeModel(model_name="models/gemini-1.5-flash")
     response = model.generate_content(prompt)
+    
     return response.text.strip()
 
 
 def chunk_form(user_input):
-    return f"User :{user_input}  ;  ai therapist: {query_anima_rag(user_input)}"
+    return f"User: {user_input}  ;  Soul (friend): {query_anima_rag(user_input)}"
 
 

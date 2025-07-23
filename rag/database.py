@@ -7,7 +7,7 @@ import uuid
 from datetime import datetime , timezone
 from embeddings import get_embedding
 from langchain_core.documents import Document
-from gemini_ai import chunk_form
+from output_logger import log_database_storage
 
 #path to your chroma
 PATH = "./chroma"
@@ -41,7 +41,9 @@ def store_into_database(input_text):
     db = Chroma(persist_directory = PATH , embedding_function = get_embedding())
     db.add_documents([docs])
     db.persist()
-    print(f"✅ Stored chunk (ID: {metadata['chunk_id']}) with timestamp : {metadata['timestamp']}.")
+    
+    # Log database storage
+    log_database_storage(metadata['chunk_id'], metadata['timestamp'], input_text)
 
 
 
